@@ -61,6 +61,7 @@ def prodects():
             'location':item.find('.location').text()
         }     
         save_to_mongo(product)
+        def parse_image(product['image'],product['title']):
 #解析图片地址
 def parse_image(url,title):
     print("正在解析图片","https:"+ str(url))
