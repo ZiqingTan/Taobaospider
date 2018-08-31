@@ -59,27 +59,22 @@ def prodects():
             'title':item.find('.title').text(),
             'shop':item.find('.shop').text(),
             'location':item.find('.location').text()
-        }
-        #print(product)
-        #print("https:"+product.keys["image"])
-        #parse_image(product["image"],product["title"])
-        
+        }     
         save_to_mongo(product)
 #解析图片地址
-#def parse_image(url,title):
-#    print("正在解析图片","https:"+ str(url))
-#    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"}
-#
-#    try:
-#        response = requests.get("https:"+ str(url),headers=headers)
-#        if response.status_code == 200:
-#            if response.content:
-#                #save_image_to_file(response.content,title)
-#                #save_to_mongo(response.content)
-#            #return response.content
-#        return None
-#    except:
-#        print("图片解析失败")
+def parse_image(url,title):
+    print("正在解析图片","https:"+ str(url))
+    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"}
+
+    try:
+        response = requests.get("https:"+ str(url),headers=headers)
+        if response.status_code == 200:
+            if response.content:
+                save_image_to_file(response.content,title)
+            return response.content
+        return None
+    except:
+        print("图片解析失败")
         
     
 #保存图片到本地
@@ -89,9 +84,6 @@ def save_image_to_file(content,title):
         titles = "淘宝"
         if not os.path.exists(titles):  #如果文件夹不存在就创建
             os.mkdir(titles)
-        #with open('{}.jpg'.format(result),'wb') as f:
-        
-        # f.write(result)
         try:
             file_path = '{0}/{1}.{2}'.format(titles,md5(content).hexdigest(),'jpg')
             if not os.path.exists(file_path):
@@ -103,9 +95,6 @@ def save_image_to_file(content,title):
             print("保存图片失败")
     else:
         print("None")
-
-
-
 
 #保存到mongo数据库    
 def save_to_mongo(result):
