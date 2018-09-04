@@ -13,10 +13,14 @@ from urllib.parse import urlencode
 import config
 client = pymongo.MongoClient(config.MONGO_URL)
 db = client[config.MONGO_DB]
-opt = webdriver.ChromeOptions()
-opt.set_headless()
-driver = webdriver.Chrome(options=opt)
+#opt = webdriver.ChromeOptions()
+#opt.set_headless()
+#driver = webdriver.Chrome(options=opt)
 #driver = webdriver.Chrome()
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-gpu')
+driver = webdriver.Chrome(chrome_options=chrome_options)
 wait = WebDriverWait(driver,6)
 def search():
     try:
